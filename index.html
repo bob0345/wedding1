@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F4D3D6" />
+  <title>Rochak & Babina — शुभ विवाह</title>
+  <meta name="description" content="Wedding invitation — Rochak & Babina, 16 February 2027, Kathmandu." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blush: #F4D3D6;
+      --blush-light: #FAE6E8;
+      --blush-deep: #E8BBC2;
+      --rose: #D79AA8;
+      --mauve: #7A5C68;
+      --mauve-soft: #9A7B87;
+      --plum: #6A4A58;
+      --wax: #D9C7A0;
+      --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='1.3'%3E%3CfeDistantLight azimuth='45' elevation='62'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)'/%3E%3C/svg%3E");
+      /* Embossed rose motif pressed into the envelope paper */
+      --emboss: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='230' height='230' fill='none' stroke-width='1.6' stroke-linecap='round'%3E%3Cdefs%3E%3Cg id='m'%3E%3Cpath d='M110 104c4-5 12-2 11 5-1 8-12 10-17 4-7-8-1-21 11-22 14-1 23 12 19 25-4 14-22 19-34 10'/%3E%3Cpath d='M84 118c-8-14 0-33 16-38M131 84c13 8 16 26 6 38M92 136c12 10 31 8 40-6'/%3E%3Cpath d='M70 150c-18 2-30 14-34 30 17 0 30-10 34-30zM150 152c16 4 26 17 28 33-16-2-27-13-28-33z'/%3E%3Cpath d='M30 40c8-10 22-12 32-4-9 9-22 11-32 4zM30 40l-12 8M186 28c-2 12 6 22 18 24 1-12-6-22-18-24zM204 52l8 12M196 196c6-8 16-9 23-3-6 7-16 8-23 3z'/%3E%3C/g%3E%3C/defs%3E%3Cuse href='%23m' stroke='%23fff' stroke-opacity='.8' transform='translate(-1 -1)'/%3E%3Cuse href='%23m' stroke='%23b0707e' stroke-opacity='.3' transform='translate(1 1)'/%3E%3C/svg%3E");
+      --col: min(100vw, 480px);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: #E9C6CB;
+      color: var(--mauve);
+      font-family: Inter, system-ui, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+    }
+    body.locked { overflow: hidden; }
+    a, button { touch-action: manipulation; font: inherit; color: inherit; }
+    h1, h2, h3, p { margin: 0; font-weight: 400; }
+
+    .serif { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; color: var(--plum); line-height: 1.1; }
+    .devanagari { font-family: "Noto Serif Devanagari", serif; }
+    .caps {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .17em;
+      text-transform: uppercase;
+      line-height: 1.7;
+    }
+
+    /* Everything lives in one phone-width column, like the reference */
+    #stage {
+      position: relative;
+      width: var(--col);
+      margin: 0 auto;
+      background: var(--blush-light);
+      box-shadow: 0 0 60px rgba(120,70,85,.18);
+      overflow: hidden;
+    }
+
+    /* ================= COVER: envelope + floral gates ================= */
+    #cover {
+      position: fixed;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: var(--col);
+      transform: translateX(-50%);
+      z-index: 50;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .open #cover { display: none; }
+
+    .paper {
+      background-color: var(--blush);
+      background-image: var(--emboss), var(--paper);
+      background-blend-mode: normal, multiply;
+    }
+
+    /* Flower gates behind the envelope */
+    .gate {
+      position: absolute; top: 0; bottom: 0;
+      width: calc(50% + 1px);
+      background: #8d9c82;
+      transition: transform 1.5s cubic-bezier(.5,0,.2,1) .45s;
+      z-index: 1;
+    }
+    .gate.left { left: 0; }
+    .gate.right { right: 0; }
+    .gate canvas { display: block; width: 100%; height: 100%; }
+    .gate .ribbon {
+      position: absolute; left: 0; right: 0; top: 46%;
+      height: 34px; margin-top: -17px;
+      background: linear-gradient(180deg, #F3C9D2 0%, #FFF1F4 14%, #F7CDD7 42%, #E6A3B5 80%, #D98DA2 100%);
+      box-shadow: 0 5px 10px rgba(90,50,60,.25);
+    }
+    .s3 .gate.left { transform: translateX(-104%); }
+    .s3 .gate.right { transform: translateX(104%); }
+
+    .bow {
+      position: absolute; left: 50%; top: 46%;
+      width: min(92%, 400px);
+      transform: translate(-50%, -37%);
+      z-index: 2;
+      filter: drop-shadow(0 8px 10px rgba(90,50,60,.28));
+      transition: transform 1s cubic-bezier(.5,0,.85,.45), opacity .45s ease .55s;
+    }
+    .s3 .bow { transform: translate(-50%, 130%) rotate(9deg); opacity: 0; }
+
+    /* Envelope body: side flaps + bottom flap */
+    .env-body {
+      position: absolute; inset: 0;
+      z-index: 3;
+      filter: drop-shadow(0 -6px 14px rgba(120,70,85,.22));
+      transition: transform 1.3s cubic-bezier(.6,0,.3,1);
+    }
+    .s2 .env-body { transform: translateY(108%); }
+    .flap-side, .flap-bottom { position: absolute; inset: 0; }
+    .flap-side.l { clip-path: polygon(0 0, 50% 41%, 50% 100%, 0 100%); }
+    .flap-side.r { clip-path: polygon(100% 0, 50% 41%, 50% 100%, 100% 100%); }
+    .flap-side.l::after, .flap-side.r::after, .flap-bottom::after, .flap-top::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+    }
+    .flap-side.l::after { background: linear-gradient(90deg, rgba(255,255,255,.2), rgba(150,90,105,.12) 50%); }
+    .flap-side.r::after { background: linear-gradient(270deg, rgba(255,255,255,.2), rgba(150,90,105,.12) 50%); }
+    .bottom-wrap { position: absolute; inset: 0; filter: drop-shadow(0 -3px 5px rgba(130,75,90,.22)); }
+    .flap-bottom { clip-path: polygon(0 100%, 50% 47%, 100% 100%); }
+    .flap-bottom::after { background: linear-gradient(0deg, rgba(255,255,255,.22), rgba(255,255,255,0) 55%); }
+
+    .cover-text {
+      position: absolute; left: 0; right: 0; top: 67%;
+      text-align: center;
+      color: #8D6674;
+      text-shadow: 0 1px 0 rgba(255,255,255,.6);
+    }
+    .cover-hint {
+      position: absolute; left: 0; right: 0;
+      bottom: calc(26px + env(safe-area-inset-bottom));
+      text-align: center;
+      color: var(--mauve-soft);
+      animation: breathe 2.2s ease-in-out infinite;
+    }
+    @keyframes breathe { 50% { opacity: .45; } }
+
+    /* Top flap */
+    .top-wrap {
+      position: absolute; inset: 0;
+      z-index: 4;
+      perspective: 1500px;
+      perspective-origin: 50% 0;
+      filter: drop-shadow(0 6px 9px rgba(130,75,90,.3));
+      pointer-events: none;
+    }
+    .flap-top {
+      position: absolute; left: 0; right: 0; top: 0;
+      height: 46%;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 1.3s cubic-bezier(.6,0,.3,1);
+    }
+    .flap-top::after { background: linear-gradient(180deg, rgba(150,90,105,.1), rgba(255,255,255,.22)); }
+    .s2 .flap-top { transform: translateY(-135%) rotateX(-28deg); }
+
+    /* Wax seal */
+    .seal {
+      position: absolute; left: 50%; top: 46%;
+      width: 112px; height: 112px;
+      margin: -60px 0 0 -56px;
+      z-index: 5;
+      border: 0; padding: 0; background: none;
+      cursor: pointer;
+      filter: drop-shadow(0 7px 9px rgba(105,65,60,.34));
+      transition: transform 1.3s cubic-bezier(.6,0,.3,1);
+    }
+    .seal svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .seal::after {
+      content: ""; position: absolute; inset: -4px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.75);
+      animation: ring 2.2s ease-out infinite;
+    }
+    @keyframes ring { from { transform: scale(.9); opacity: .9; } to { transform: scale(1.35); opacity: 0; } }
+    .s1 .seal { transform: scale(.9); transition-duration: .22s; }
+    .s1 .seal::after { display: none; }
+    .s2 .seal { transform: translateY(-62vh) scale(.9); transition-duration: 1.3s; }
+
+    /* ================= HERO ================= */
+    #invite { position: relative; }
+    .hero {
+      position: relative;
+      min-height: 100vh; min-height: 100svh;
+      display: flex; flex-direction: column;
+      text-align: center;
+      background:
+        radial-gradient(60% 16% at 22% 20%, rgba(255,255,255,.75), transparent 70%),
+        radial-gradient(55% 14% at 80% 33%, rgba(255,255,255,.6), transparent 70%),
+        radial-gradient(70% 16% at 45% 50%, rgba(255,240,244,.7), transparent 70%),
+        linear-gradient(180deg, #D5CBE8 0%, #E3D2E9 28%, #F1D6E2 55%, #F8E1E4 100%);
+      overflow: hidden;
+    }
+    .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+    .scene { display: block; width: 100%; margin-top: auto; position: relative; z-index: 1; }
+    .hero-text {
+      position: relative; z-index: 3;
+      padding: calc(34px + env(safe-area-inset-top)) 15% 0;
+      margin-bottom: -34px;
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 1.5s ease 1s, transform 1.5s ease 1s;
+    }
+    .s3 .hero-text { opacity: 1; transform: none; }
+    .hero-text .caps { color: #73586A; text-shadow: 0 0 10px rgba(255,255,255,.9); }
+    .monogram { width: 84px; height: 84px; display: block; margin: 6px auto 2px; }
+    .names { font-size: clamp(2.6rem, 11.5vw, 3.7rem); white-space: nowrap; margin: 4px -12% 12px; text-shadow: 0 0 14px rgba(255,255,255,.9); }
+    .date-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 14px 0 2px; }
+    .date-row .rule { border-top: 1px solid rgba(115,88,106,.55); border-bottom: 1px solid rgba(115,88,106,.55); padding: 3px 4px; min-width: 96px; }
+    .date-row .day { font-family: "Cormorant Garamond", Georgia, serif; font-size: 4rem; line-height: .9; font-weight: 500; color: var(--plum); text-shadow: 0 0 14px rgba(255,255,255,.9); }
+    
+    /* ================= SECTIONS ================= */
+    .section {
+      position: relative;
+      padding: 76px 30px;
+      text-align: center;
+      --wash: rgba(250,230,232,.62);
+      background-color: var(--blush-light);
+      background-image: linear-gradient(var(--wash), var(--wash)), var(--paper);
+      background-blend-mode: normal, multiply;
+    }
+    .section.deeper { background-color: #F6DADD; --wash: rgba(246,218,221,.62); }
+    .section h2 { font-size: clamp(2.4rem, 10.5vw, 3.2rem); }
+    .section .sub { margin-top: 6px; color: var(--mauve-soft); }
+    .section p.body { margin-top: 16px; }
+    .flourish { display: block; width: 150px; margin: 14px auto 0; color: var(--rose); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      margin-top: 26px; padding: 15px 26px;
+      min-height: 50px;
+      border: 1px solid var(--mauve-soft);
+      border-radius: 999px;
+      background: rgba(255,255,255,.45);
+      color: var(--plum);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .2s ease;
+    }
+    .btn:active { background: rgba(255,255,255,.85); }
+    .btn.solid { background: var(--mauve); border-color: var(--mauve); color: #fff; width: 100%; }
+    .btn.solid:active { background: var(--plum); }
+
+    .venue-art { width: 210px; display: block; margin: 0 auto 10px; color: var(--mauve-soft); }
+
+    /* Drapes */
+    .drapes { position: absolute; top: 0; left: 0; width: 100%; display: block; pointer-events: none; }
+    .itinerary { padding-top: calc(var(--col) * .4 + 22px); }
+
+    .timeline { list-style: none; margin: 40px auto 0; padding: 0; max-width: 310px; text-align: left; position: relative; }
+    .timeline::before { content: ""; position: absolute; left: 5px; top: 10px; bottom: 34px; width: 1px; background: rgba(154,123,135,.45); }
+    .timeline li { position: relative; padding: 0 0 34px 34px; }
+    .timeline li::before {
+      content: ""; position: absolute; left: 0; top: 7px; width: 11px; height: 11px;
+      background: var(--rose); transform: rotate(45deg);
+      box-shadow: 0 0 0 4px var(--blush-light);
+    }
+    .timeline .time { color: var(--plum); }
+    .timeline h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: 2.1rem; color: var(--plum); line-height: 1.2; margin-top: 2px; }
+    .timeline p { font-size: 16.5px; color: var(--mauve); }
+
+    .count { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 340px; margin: 22px auto 0; }
+    .hero-text .count { margin-left: -6%; margin-right: -6%; text-shadow: 0 0 12px rgba(255,255,255,.9); }
+    .hero-text .lede { margin-top: 2px; color: #6B5262; text-shadow: 0 0 12px rgba(255,255,255,.95); }
+    .shubh { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 19px; color: var(--plum); }
+    .shubh::before, .shubh::after { content: ""; width: 42px; height: 1px; background: rgba(115,88,106,.55); }
+    .count > div + div { border-left: 1px solid rgba(154,123,135,.35); }
+    .count b { display: block; font-family: "Cormorant Garamond", Georgia, serif; font-size: 2.6rem; font-weight: 500; line-height: 1; color: var(--plum); }
+    .count .caps { font-size: 12.5px; letter-spacing: .14em; color: var(--mauve-soft); }
+
+    .arches { display: grid; grid-template-columns: 1fr 1.25fr 1fr; gap: 12px; align-items: end; margin-top: 34px; }
+    .arch {
+      aspect-ratio: 3 / 5;
+      border-radius: 999px 999px 6px 6px;
+      border: 1px solid rgba(154,123,135,.4);
+      padding: 6px;
+      background: rgba(255,255,255,.5);
+    }
+    .arch > div {
+      width: 100%; height: 100%;
+      border-radius: 999px 999px 3px 3px;
+      background: linear-gradient(160deg, #F2D3DA, #E4D3EA) center / cover no-repeat;
+      display: grid; place-items: center;
+      color: rgba(122,92,104,.6);
+    }
+
+    /* RSVP */
+    form { margin-top: 30px; text-align: left; }
+    form label { display: block; margin-bottom: 22px; }
+    form .caps { display: block; color: var(--mauve-soft); }
+    .field {
+      width: 100%;
+      background: transparent;
+      border: 0; border-bottom: 1px solid rgba(122,92,104,.45);
+      border-radius: 0;
+      padding: 10px 0;
+      font: inherit; font-size: 17px;
+      color: var(--plum);
+      outline: none;
+    }
+    .field:focus { border-color: var(--plum); }
+    .field::placeholder { color: rgba(122,92,104,.45); }
+    #rsvpStatus { text-align: center; min-height: 28px; margin-top: 14px; color: var(--plum); }
+
+    footer.section { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+
+    .fade-up { opacity: 0; transform: translateY(22px); transition: opacity .9s ease, transform .9s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* Sound button */
+    #sound {
+      position: fixed; z-index: 40;
+      right: calc(max(0px, (100vw - 480px) / 2) + 16px + env(safe-area-inset-right));
+      bottom: calc(18px + env(safe-area-inset-bottom));
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.8);
+      background: rgba(255,255,255,.6);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+      box-shadow: 0 6px 18px rgba(120,70,85,.22);
+      color: var(--mauve);
+      display: grid; place-items: center;
+      cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transition: opacity .8s ease;
+    }
+    .s3 #sound { opacity: 1; pointer-events: auto; }
+    #sound .waves { display: none; }
+    #sound .mute { display: block; }
+    #sound.playing .waves { display: block; }
+    #sound.playing .mute { display: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; transition-delay: 0s !important; animation: none !important; }
+    }
+  </style>
+</head>
+
+<body class="locked">
+
+  <div id="stage">
+    <main id="invite">
+
+      <!-- ============ HERO ============ -->
+      <section class="hero" id="home">
+        <div class="hero-text">
+          <p class="devanagari shubh">शुभ विवाह</p>
+          <p class="caps" style="margin-top:10px">Together with their families</p>
+          <svg class="monogram" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <circle cx="50" cy="50" r="45" stroke="#8D6E80" stroke-width=".8"/>
+            <circle cx="50" cy="50" r="41" stroke="#8D6E80" stroke-width=".4"/>
+            <text x="37" y="64" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="46" font-weight="500" fill="#6A4A58">R</text>
+            <text x="62" y="72" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="46" font-weight="500" fill="#8D6E80">B</text>
+          </svg>
+          <h1 class="serif names">Rochak &amp; Babina</h1>
+          <p class="lede">With joyful hearts, we invite you to celebrate the beginning of our forever.</p>
+          <div class="date-row">
+            <span class="caps rule">February</span>
+            <span class="day">16</span>
+            <span class="caps rule">2027</span>
+          </div>
+          <p class="caps">Tuesday</p>
+          <div class="count">
+            <div><b id="days">--</b><span class="caps">Days</span></div>
+            <div><b id="hours">--</b><span class="caps">Hours</span></div>
+            <div><b id="minutes">--</b><span class="caps">Mins</span></div>
+            <div><b id="seconds">--</b><span class="caps">Secs</span></div>
+          </div>
+          <p class="devanagari" style="font-size:16px;margin-top:16px;color:#6B5262">हामीलाई तपाईंको उपस्थितिको प्रतीक्षा छ</p>
+        </div>
+
+        <!-- Terrace, staircase, cypress trees and the Himalaya on the horizon -->
+        <svg class="scene" viewBox="0 0 400 380" aria-hidden="true">
+          <defs>
+            <linearGradient id="cyp" x1="0" x2="1"><stop offset="0" stop-color="#7C8F74"/><stop offset=".55" stop-color="#9BAA8C"/><stop offset="1" stop-color="#6F8268"/></linearGradient>
+            <linearGradient id="haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6E3EA" stop-opacity="0"/><stop offset="1" stop-color="#F8E4E8"/></linearGradient>
+            <linearGradient id="step" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6F6"/><stop offset="1" stop-color="#F4DDE0"/></linearGradient>
+          </defs>
+          <path d="M0 150 30 122 62 138 104 92 132 116 168 70 196 98 226 62 262 112 290 90 330 128 362 104 400 138V190H0Z" fill="#E4D8EE"/>
+          <path d="M168 70 181 91 172 88 163 96 154 84ZM226 62 242 86 231 82 222 92 212 78ZM104 92 115 108 106 105 98 112 92 104ZM290 90 302 104 293 102 285 108 280 100Z" fill="#FFFFFF" opacity=".9"/>
+          <path d="M0 168 50 140 96 160 150 128 200 156 252 130 300 158 350 138 400 162V200H0Z" fill="#EADDEB" opacity=".85"/>
+          <rect y="120" width="400" height="80" fill="url(#haze)"/>
+
+          <ellipse cx="52" cy="112" rx="19" ry="92" fill="url(#cyp)"/>
+          <ellipse cx="94" cy="136" rx="14" ry="66" fill="url(#cyp)" opacity=".92"/>
+          <ellipse cx="348" cy="112" rx="19" ry="92" fill="url(#cyp)"/>
+          <ellipse cx="306" cy="136" rx="14" ry="66" fill="url(#cyp)" opacity=".92"/>
+
+          <rect y="196" width="400" height="184" fill="#F6E1E4"/>
+          <g fill="#FBEFF0" stroke="#D6B9C2" stroke-width=".8">
+            <rect x="0" y="166" width="150" height="6" rx="2"/><rect x="250" y="166" width="150" height="6" rx="2"/>
+            <rect x="0" y="192" width="150" height="6"/><rect x="250" y="192" width="150" height="6"/>
+            <g id="bal">
+              <rect x="8" y="172" width="6" height="20" rx="3"/><rect x="24" y="172" width="6" height="20" rx="3"/><rect x="40" y="172" width="6" height="20" rx="3"/>
+              <rect x="56" y="172" width="6" height="20" rx="3"/><rect x="72" y="172" width="6" height="20" rx="3"/><rect x="88" y="172" width="6" height="20" rx="3"/>
+              <rect x="104" y="172" width="6" height="20" rx="3"/><rect x="120" y="172" width="6" height="20" rx="3"/><rect x="138" y="162" width="12" height="36" rx="2"/>
+            </g>
+            <use href="#bal" transform="translate(400 0) scale(-1 1)"/>
+          </g>
+          <g stroke="#DCC0C8" stroke-width=".8">
+            <rect x="150" y="196" width="100" height="16" fill="url(#step)"/>
+            <rect x="138" y="212" width="124" height="18" fill="url(#step)"/>
+            <rect x="124" y="230" width="152" height="20" fill="url(#step)"/>
+            <rect x="110" y="250" width="180" height="22" fill="url(#step)"/>
+            <rect x="94" y="272" width="212" height="24" fill="url(#step)"/>
+            <rect x="76" y="296" width="248" height="26" fill="url(#step)"/>
+            <rect x="56" y="322" width="288" height="28" fill="url(#step)"/>
+            <rect x="34" y="350" width="332" height="32" fill="url(#step)"/>
+          </g>
+        </svg>
+        <canvas id="heroFlowers"></canvas>
+      </section>
+
+      <!-- ============ THE CELEBRATION ============ -->
+      <section class="section deeper itinerary" id="events">
+        <svg class="drapes" viewBox="0 0 400 190" aria-hidden="true">
+          <defs>
+            <linearGradient id="dr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9DCE1"/><stop offset=".6" stop-color="#EDBAC5"/><stop offset="1" stop-color="#E2A3B2"/></linearGradient>
+            <linearGradient id="tail" x1="0" x2="1"><stop offset="0" stop-color="#E9B2BE"/><stop offset=".5" stop-color="#F9DDE2"/><stop offset="1" stop-color="#E6ABB8"/></linearGradient>
+          </defs>
+          <g stroke="#B88A97" stroke-width=".8">
+            <path d="M70 0v88M110 0v112M150 0v84M250 0v84M290 0v112M330 0v88M200 0v126"/>
+          </g>
+          <g fill="#fff" stroke="#C99AA8" stroke-width=".7">
+            <path d="M70 88l4 8-4 10-4-10zM110 112l4 8-4 10-4-10zM150 84l4 8-4 10-4-10zM250 84l4 8-4 10-4-10zM290 112l4 8-4 10-4-10zM330 88l4 8-4 10-4-10zM200 126l5 9-5 12-5-12z"/>
+          </g>
+          <path d="M0 0v176l10-14 10 20 9-22 9 12V0z" fill="url(#tail)"/>
+          <path d="M400 0v176l-10-14-10 20-9-22-9 12V0z" fill="url(#tail)"/>
+          <g fill="url(#dr)">
+            <path d="M0 0h140c-8 44-36 68-70 68S8 44 0 0z"/>
+            <path d="M130 0h140c-8 50-36 76-70 76s-62-26-70-76z"/>
+            <path d="M260 0h140c-8 44-36 68-70 68s-62-24-70-68z"/>
+          </g>
+          <g fill="none" stroke="#C98C9C" stroke-width=".8" opacity=".7">
+            <path d="M8 0c8 28 30 46 62 46s54-18 62-46M18 0c8 16 26 26 52 26s44-10 52-26"/>
+            <path d="M138 0c8 32 30 52 62 52s54-20 62-52M148 0c8 18 26 30 52 30s44-12 52-30"/>
+            <path d="M268 0c8 28 30 46 62 46s54-18 62-46M278 0c8 16 26 26 52 26s44-10 52-26"/>
+            <path d="M10 20v140M20 10v160M30 20v130M390 20v140M380 10v160M370 20v130"/>
+          </g>
+          <circle cx="135" cy="6" r="9" fill="#F3C9D2" stroke="#C98C9C" stroke-width=".8"/>
+          <circle cx="265" cy="6" r="9" fill="#F3C9D2" stroke="#C98C9C" stroke-width=".8"/>
+        </svg>
+
+        <div class="fade-up">
+          <p class="caps sub">Save the date</p>
+          <h2 class="serif">The Celebration</h2>
+          <svg class="flourish" viewBox="0 0 150 14" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M0 7h58M92 7h58M75 1l6 6-6 6-6-6z"/></svg>
+          <p class="body">Please join us for these special moments.</p>
+        </div>
+
+        <ol class="timeline">
+          <li class="fade-up">
+            <p class="caps time">Morning · 10:00 AM</p>
+            <h3>Janti</h3>
+            <p>Traditional wedding ceremony &amp; blessings</p>
+          </li>
+          <li class="fade-up">
+            <p class="caps time">Afternoon · 12:30 PM</p>
+            <h3>Reception</h3>
+            <p>The reception ceremony</p>
+          </li>
+          <li class="fade-up">
+            <p class="caps time">Evening · 6:30 PM</p>
+            <h3>Cocktail Party</h3>
+            <p>Cocktails, music &amp; celebration</p>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ============ VENUE ============ -->
+      <section class="section" id="venue">
+        <div class="fade-up">
+          <svg class="venue-art" viewBox="0 0 210 120" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M105 8v10M105 18c-22 3-40 14-52 30h104c-12-16-30-27-52-30z"/>
+            <path d="M45 48h120M49 54h112M49 48v6M161 48v6"/>
+            <path d="M58 54v52M74 54v52M136 54v52M152 54v52"/>
+            <path d="M74 106V78c0-16 14-22 31-22s31 6 31 22v28"/>
+            <path d="M40 106h130M32 113h146M40 106l-8 7M170 106l8 7"/>
+            <path d="M12 112c2-14 8-22 14-26 2 9 0 18-6 26M198 112c-2-14-8-22-14-26-2 9 0 18 6 26M18 112c-6-6-10-13-10-20 6 2 11 7 13 14M192 112c6-6 10-13 10-20-6 2-11 7-13 14"/>
+            <path d="M95 34c4-4 16-4 20 0M88 40c8-5 26-5 34 0"/>
+          </svg>
+          <p class="devanagari" style="font-size:19px;color:var(--plum)">स्थान</p>
+          <h2 class="serif">Leela Garden</h2>
+          <p class="body">Kathmandu, Nepal<br>Tuesday, 16 February 2027</p>
+          <a class="btn caps" href="https://maps.app.goo.gl/MuoM3D6tE1JsMWKK7" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-6.1 7-12a7 7 0 1 0-14 0c0 5.900 7 12 7 12Z"/><circle cx="12" cy="9" r="2.2"/></svg>
+            Open in Google Maps
+          </a>
+        </div>
+      </section>
+
+      <!-- ============ OUR STORY ============
+           To add a photo, put it in the assets folder and set it on the inner div, e.g.
+           <div style="background-image:url('assets/photo1.jpg')"></div>  -->
+      <section class="section deeper" id="story">
+        <div class="fade-up">
+          <p class="caps sub">A little glimpse</p>
+          <h2 class="serif">Our Story</h2>
+          <p class="body">Two journeys, one beautiful chapter.</p>
+          <div class="arches">
+            <div class="arch"><div><span class="caps">Photo</span></div></div>
+            <div class="arch"><div><span class="caps">Photo</span></div></div>
+            <div class="arch"><div><span class="caps">Photo</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RSVP ============ -->
+      <section class="section" id="rsvp">
+        <div class="fade-up">
+          <p class="devanagari" style="font-size:17px;color:var(--mauve-soft)">तपाईंको प्रतीक्षामा</p>
+          <h2 class="serif">Will You Join Us?</h2>
+          <p class="body">Kindly let us know if you can make it.</p>
+
+          <form id="rsvpForm">
+            <label>
+              <span class="caps">Guest name</span>
+              <input class="field" required name="name" type="text" autocomplete="name" placeholder="Your name">
+            </label>
+            <label>
+              <span class="caps">Number of attendees</span>
+              <select class="field" required name="guests">
+                <option value="" disabled selected>Select</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
+              </select>
+            </label>
+            <label>
+              <span class="caps">Dietary needs</span>
+              <input class="field" name="dietary" type="text" placeholder="Vegetarian, allergies, etc.">
+            </label>
+            <label>
+              <span class="caps">A wish for the couple</span>
+              <textarea class="field" name="wish" rows="3" placeholder="Write a little message..." style="resize:none"></textarea>
+            </label>
+            <button type="submit" class="btn solid caps" style="margin-top:4px">Send RSVP</button>
+            <p id="rsvpStatus" role="status"></p>
+          </form>
+        </div>
+      </section>
+
+      <footer class="section deeper">
+        <p class="devanagari" style="font-size:18px">॥ शुभ विवाह ॥</p>
+        <p class="serif" style="font-size:2.5rem;margin-top:8px">Rochak &amp; Babina</p>
+        <p class="caps sub" style="margin-top:10px">With love, from our families</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ============ COVER ============ -->
+  <div id="cover" role="button" tabindex="0" aria-label="Open wedding invitation">
+    <div class="gate left"><canvas id="gateL"></canvas><div class="ribbon"></div></div>
+    <div class="gate right"><canvas id="gateR"></canvas><div class="ribbon"></div></div>
+
+    <svg class="bow" viewBox="0 0 360 270" aria-hidden="true">
+      <defs>
+        <linearGradient id="bwLoop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1F4"/><stop offset=".38" stop-color="#F7CDD7"/><stop offset=".78" stop-color="#E9A7B8"/><stop offset="1" stop-color="#DC8FA4"/></linearGradient>
+        <linearGradient id="bwIn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C97B93"/><stop offset=".6" stop-color="#DE9BAE"/><stop offset="1" stop-color="#EDBAC7"/></linearGradient>
+        <linearGradient id="bwTail" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7A3B5"/><stop offset=".4" stop-color="#F9D5DD"/><stop offset=".7" stop-color="#EEB5C3"/><stop offset="1" stop-color="#DE93A8"/></linearGradient>
+        <linearGradient id="bwKnot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEFF3"/><stop offset=".5" stop-color="#F2BECB"/><stop offset="1" stop-color="#D98DA2"/></linearGradient>
+        <filter id="bwSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
+        <g id="bwHalf">
+          <!-- tail with a swallow-tail cut -->
+          <path d="M168 108c-8 44-28 88-66 134l28-10 8 28c26-44 44-92 50-146z" fill="url(#bwTail)"/>
+          <path d="M176 116c-8 42-22 82-44 122" fill="none" stroke="#C97B93" stroke-width="1.200" opacity=".55"/>
+          <path d="M170 112c-10 36-26 72-52 108" fill="none" stroke="#fff" stroke-width="2.400" opacity=".45" filter="url(#bwSoft)"/>
+          <!-- loop -->
+          <path d="M180 96C152 44 88 14 46 28 10 40 4 92 36 120c40 30 104 10 144-18z" fill="url(#bwLoop)"/>
+          <!-- inside of the loop, seen through the opening -->
+          <path d="M166 94C140 64 98 50 68 58c-22 6-24 30-6 44 30 18 76 10 104-4z" fill="url(#bwIn)"/>
+          <path d="M70 62c26-8 62 6 86 28" fill="none" stroke="#B96A84" stroke-width="1.200" opacity=".5"/>
+          <!-- soft sheen and gathered folds -->
+          <path d="M150 62C122 36 84 26 54 36" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".6" filter="url(#bwSoft)"/>
+          <path d="M40 112c34 22 86 10 124-12" fill="none" stroke="#C97B93" stroke-width="5" opacity=".28" filter="url(#bwSoft)"/>
+          <path d="M172 88c-10-14-22-24-36-32M170 98c-14 2-28 8-40 16M174 92c-16-6-32-8-48-6" fill="none" stroke="#C5758E" stroke-width="1.100" stroke-linecap="round" opacity=".55"/>
+        </g>
+      </defs>
+      <use href="#bwHalf"/>
+      <use href="#bwHalf" transform="translate(360 0) scale(-1 1)"/>
+      <!-- knot -->
+      <path d="M160 76c12-7 28-7 40 0 7 13 7 31 0 44-12 7-28 7-40 0-7-13-7-31 0-44z" fill="url(#bwKnot)"/>
+      <path d="M168 78c-4 13-4 27 0 40M180 75v46M192 78c4 13 4 27 0 40" fill="none" stroke="#C5758E" stroke-width="1.100" opacity=".55"/>
+      <ellipse cx="172" cy="88" rx="6" ry="9" fill="#fff" opacity=".5" filter="url(#bwSoft)"/>
+    </svg>
+
+    <div class="env-body">
+      <div class="flap-side l paper"></div>
+      <div class="flap-side r paper"></div>
+      <div class="bottom-wrap">
+        <div class="flap-bottom paper"></div>
+      </div>
+      <div class="cover-text">
+        <p class="devanagari" style="font-size:30px;letter-spacing:.08em">शुभ विवाह</p>
+        <p class="caps" style="margin-top:8px">A celebration of love &amp; tradition</p>
+      </div>
+      <div class="cover-hint">
+        <p class="caps">Tap to Open Invitation</p>
+        <p class="devanagari" style="font-size:18px">निमन्त्रणा खोल्नुहोस्</p>
+      </div>
+    </div>
+
+    <div class="top-wrap"><div class="flap-top paper"></div></div>
+    <button class="seal" aria-hidden="true" tabindex="-1">
+      <svg viewBox="0 0 120 120">
+        <defs>
+          <filter id="wax" x="-20%" y="-20%" width="140%" height="140%">
+            <!-- wobbly poured edge -->
+            <feTurbulence type="fractalNoise" baseFrequency=".032" numOctaves="2" seed="11" result="n"/>
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G" result="d"/>
+            <!-- raised, rounded rim lit from the top left -->
+            <feGaussianBlur in="d" stdDeviation="2.600" result="b"/>
+            <feDiffuseLighting in="b" surfaceScale="7" diffuseConstant="1.150" lighting-color="#fff" result="df"><feDistantLight azimuth="230" elevation="52"/></feDiffuseLighting>
+            <feComposite in="df" in2="d" operator="in" result="df2"/>
+            <feBlend in="d" in2="df2" mode="multiply" result="lit"/>
+            <feSpecularLighting in="b" surfaceScale="7" specularConstant=".55" specularExponent="26" lighting-color="#FFF9EA" result="sp"><fePointLight x="22" y="8" z="80"/></feSpecularLighting>
+            <feComposite in="sp" in2="d" operator="in" result="sp2"/>
+            <!-- fine wax grain -->
+            <feTurbulence type="fractalNoise" baseFrequency="1.150" numOctaves="2" seed="3" result="g"/>
+            <feColorMatrix in="g" type="matrix" values="0 0 0 0 .38  0 0 0 0 .29  0 0 0 0 .16  0 0 0 -1.100 .66" result="g2"/>
+            <feComposite in="g2" in2="d" operator="in" result="g3"/>
+            <feMerge><feMergeNode in="lit"/><feMergeNode in="g3"/><feMergeNode in="sp2"/></feMerge>
+          </filter>
+          <radialGradient id="waxFill" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#F4EAD3"/><stop offset=".55" stop-color="#E2D2AF"/><stop offset="1" stop-color="#CDB98F"/></radialGradient>
+          <radialGradient id="waxDip" cx="45%" cy="38%" r="70%"><stop offset="0" stop-color="#E9DCBD"/><stop offset="1" stop-color="#D6C49C"/></radialGradient>
+        </defs>
+        <g filter="url(#wax)">
+          <path d="M60 8c16-2 34 6 43 20 9 13 11 31 4 46-6 15-21 27-37 31-17 4-37-2-49-15C9 77 5 58 11 42 17 24 40 10 60 8z" fill="url(#waxFill)"/>
+          <ellipse cx="97" cy="92" rx="11" ry="9" fill="#D9C8A2"/>
+          <ellipse cx="18" cy="84" rx="8" ry="10" fill="#DCCBA6"/>
+        </g>
+        <!-- pressed stamp -->
+        <circle cx="60" cy="59" r="36.500" fill="url(#waxDip)"/>
+        <circle cx="60" cy="59" r="36.500" fill="none" stroke="#8E7748" stroke-opacity=".5" stroke-width="2"/>
+        <circle cx="60.800" cy="60" r="37.600" fill="none" stroke="#FFFBEF" stroke-opacity=".75" stroke-width="1.200"/>
+        <circle cx="60" cy="59" r="30.500" fill="none" stroke="#9C8554" stroke-opacity=".55" stroke-width="1" stroke-dasharray="1.200 3.600" stroke-linecap="round"/>
+        <g font-family="Cormorant Garamond, Georgia, serif" font-size="31" font-weight="600" text-anchor="middle" letter-spacing=".5">
+          <text x="61" y="70.400" fill="#FFFBEF" fill-opacity=".85">RB</text>
+          <text x="59.200" y="68.600" fill="#7E683C" fill-opacity=".6">RB</text>
+          <text x="60" y="69.500" fill="#C3AD7F">RB</text>
+        </g>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Sound button -->
+  <button id="sound" aria-label="Play background music">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 9.500h3l5-4v13l-5-4H4z"/>
+      <path class="waves" d="M15.500 9a4 4 0 0 1 0 6M18 6.500a7.500 7.500 0 0 1 0 11"/>
+      <path class="mute" d="M16 9.500l5 5M21 9.500l-5 5"/>
+    </svg>
+  </button>
+
+  <!-- Nepali bansuri (bamboo flute) tune — "बाँसुरीको धुन Basuri" by Learnerktm,
+       Wikimedia Commons, CC0 public domain. Swap the file to use a different track. -->
+  <audio id="bgMusic" loop preload="none">
+    <source src="assets/nepali-bansuri.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // ---------- Painted flowers (drawn in code, so no image files are needed) ----------
+    function rng(seed) {
+      return function () {
+        seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+        let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+    const PETALS = ['#FFFDFB', '#FFFDFB', '#FDF4EC', '#FBEAEC', '#F6D5DC', '#F1C2CE', '#EFE3F3'];
+    const LEAVES = ['#7F9277', '#93A489', '#6E8368', '#A7B59B'];
+
+    function leaf(ctx, x, y, len, ang, col) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+      ctx.fillStyle = col;
+      ctx.beginPath(); ctx.ellipse(len / 2, 0, len / 2, len / 5.5, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.restore();
+    }
+    function rose(ctx, x, y, r, col, rand) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(rand() * 6.28);
+      ctx.shadowColor = 'rgba(105,70,80,.28)'; ctx.shadowBlur = r * .35; ctx.shadowOffsetY = r * .1;
+      ctx.fillStyle = col; ctx.strokeStyle = 'rgba(170,120,135,.22)'; ctx.lineWidth = .7;
+      const ring = (n, dist, rx, ry) => {
+        for (let i = 0; i < n; i++) {
+          const a = i / n * 6.283;
+          ctx.beginPath();
+          ctx.ellipse(Math.cos(a) * dist, Math.sin(a) * dist, rx, ry, a, 0, 6.283);
+          ctx.fill(); ctx.stroke();
+        }
+      };
+      ring(6, r * .5, r * .56, r * .46);
+      ctx.shadowColor = 'transparent';
+      ring(5, r * .26, r * .4, r * .32);
+      ctx.fillStyle = 'rgba(226,170,185,.55)';
+      ctx.beginPath(); ctx.arc(0, 0, r * .2, 0, 6.283); ctx.fill();
+      ctx.strokeStyle = 'rgba(170,110,130,.4)';
+      ctx.beginPath(); ctx.arc(0, 0, r * .13, .5, 5); ctx.stroke();
+      ctx.restore();
+    }
+    function blossom(ctx, x, y, r, col) {
+      ctx.save(); ctx.translate(x, y);
+      ctx.shadowColor = 'rgba(105,70,80,.25)'; ctx.shadowBlur = r * .4;
+      ctx.fillStyle = col;
+      for (let i = 0; i < 5; i++) {
+        const a = i / 5 * 6.283;
+        ctx.beginPath(); ctx.arc(Math.cos(a) * r * .5, Math.sin(a) * r * .5, r * .45, 0, 6.283); ctx.fill();
+      }
+      ctx.shadowColor = 'transparent';
+      ctx.fillStyle = '#E9D7A6';
+      ctx.beginPath(); ctx.arc(0, 0, r * .2, 0, 6.283); ctx.fill();
+      ctx.restore();
+    }
+    // density(x, y) returns 0..1 — how likely a flower grows at that spot
+    function paintFlowers(canvas, seed, density, solid) {
+      const box = canvas.getBoundingClientRect();
+      const w = Math.round(box.width), h = Math.round(box.height);
+      if (!w || !h) return;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      const rand = rng(seed);
+      if (solid) {
+        const g = ctx.createLinearGradient(0, 0, 0, h);
+        g.addColorStop(0, '#8FA084'); g.addColorStop(1, '#788B70');
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+      const step = 17, spots = [];
+      for (let y = -step; y < h + step; y += step) {
+        for (let x = -step; x < w + step; x += step) {
+          const px = x + rand() * step, py = y + rand() * step;
+          const d = density(px, py, w, h);
+          if (rand() < d) spots.push([px, py, d]);
+        }
+      }
+      for (const [x, y] of spots) {
+        for (let i = 0; i < 2; i++) leaf(ctx, x, y, 14 + rand() * 16, rand() * 6.28, LEAVES[rand() * LEAVES.length | 0]);
+      }
+      spots.sort(() => rand() - .5);
+      for (const [x, y] of spots) {
+        const col = PETALS[rand() * PETALS.length | 0];
+        const k = rand();
+        if (k < .62) rose(ctx, x, y, 9 + rand() * 9, col, rand);
+        else if (k < .92) blossom(ctx, x, y, 5 + rand() * 5, col);
+        else rose(ctx, x, y, 17 + rand() * 7, col, rand);
+      }
+    }
+    const everywhere = () => 1;
+    function heroDensity(x, y, w, h) {
+      const edge = Math.min(x, w - x);
+      const side = 1 - edge / (w * (.105 + .035 * Math.sin(y / 46)));
+      const corner = (cx, cy, r) => 1 - Math.hypot(x - cx, y - cy) / (w * r);
+      const top = Math.max(corner(0, 0, .33), corner(w, 0, .33));
+      const bottom = Math.max(corner(0, h, .4), corner(w, h, .4));
+      const floor = 1 - (h - y) / 26;
+      for (const r of keepClear) {
+        if (x > r.left && x < r.right && y > r.top && y < r.bottom) return 0;
+      }
+      return Math.max(side, top, bottom, floor) * 1.5;
+    }
+
+    // Boxes around each line of hero text (plus room for a petal) where nothing may grow
+    let keepClear = [];
+    function paintHero() {
+      const hero = heroCanvas.getBoundingClientRect();
+      const pad = 30, range = document.createRange();
+      keepClear = [...document.querySelector('.hero-text').children].map(el => {
+        range.selectNodeContents(el);
+        const r = range.getBoundingClientRect();
+        return { left: r.left - hero.left - pad, right: r.right - hero.left + pad, top: r.top - hero.top - pad, bottom: r.bottom - hero.top + pad };
+      });
+      paintFlowers(heroCanvas, 7, heroDensity, false);
+    }
+
+    const cover = document.getElementById('cover');
+    const heroCanvas = document.getElementById('heroFlowers');
+    let lastW = 0;
+    function paintAll() {
+      if (window.innerWidth === lastW) return; // ignore height-only changes (mobile address bar)
+      lastW = window.innerWidth;
+      paintHero();
+      if (!document.body.classList.contains('open')) {
+        paintFlowers(document.getElementById('gateL'), 21, everywhere, true);
+        paintFlowers(document.getElementById('gateR'), 42, everywhere, true);
+      }
+    }
+    paintAll();
+    window.addEventListener('resize', paintAll);
+    // Text height changes once the fonts arrive, so repaint the hero garland then
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(paintHero);
+
+    // ---------- Music: phones only allow playback after a tap, so it starts with the seal ----------
+    const music = document.getElementById('bgMusic');
+    const soundBtn = document.getElementById('sound');
+    music.volume = 0.6;
+    function setPlaying(on) {
+      soundBtn.classList.toggle('playing', on);
+      soundBtn.setAttribute('aria-label', on ? 'Pause background music' : 'Play background music');
+    }
+    music.addEventListener('play', () => setPlaying(true));
+    music.addEventListener('pause', () => setPlaying(false));
+    soundBtn.addEventListener('click', () => {
+      if (music.paused) music.play().catch(() => {}); else music.pause();
+    });
+
+    // ---------- Scroll reveals ----------
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+      });
+    }, { threshold: .12 });
+
+    // ---------- Opening sequence: seal → flap → envelope slides away → flower gates part ----------
+    let started = false;
+    function openInvitation() {
+      if (started) return;
+      started = true;
+      const b = document.body.classList;
+      music.play().catch(() => {});
+      b.add('s1');
+      setTimeout(() => b.add('s2'), 260);
+      setTimeout(() => b.add('s3'), 1750);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        b.remove('locked'); b.add('open');
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+      }, 3950);
+    }
+    cover.addEventListener('click', openInvitation);
+    cover.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openInvitation(); }
+    });
+
+    // ---------- Countdown — edit this date/time for the real wedding ----------
+    const weddingDate = new Date('2027-02-16T10:00:00+05:45').getTime();
+    function countdown() {
+      const s = Math.floor(Math.max(0, weddingDate - Date.now()) / 1000);
+      const set = (id, v) => document.getElementById(id).textContent = String(v).padStart(2, '0');
+      set('days', Math.floor(s / 86400));
+      set('hours', Math.floor((s % 86400) / 3600));
+      set('minutes', Math.floor((s % 3600) / 60));
+      set('seconds', s % 60);
+    }
+    countdown(); setInterval(countdown, 1000);
+
+    // ---------- RSVP demo — NOT connected yet: replies are not saved or sent anywhere ----------
+    document.getElementById('rsvpForm').addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('rsvpStatus').textContent = 'Thank you — your RSVP has been received.';
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
