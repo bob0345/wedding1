@@ -95,22 +95,24 @@
     .gate canvas { display: block; width: 100%; height: 100%; }
     .gate .ribbon {
       position: absolute; left: 0; right: 0; top: 46%;
-      height: 34px; margin-top: -17px;
-      background: linear-gradient(180deg, #F3C9D2 0%, #FFF1F4 14%, #F7CDD7 42%, #E6A3B5 80%, #D98DA2 100%);
-      box-shadow: 0 5px 10px rgba(90,50,60,.25);
+      height: 52px; margin-top: -26px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.55) 0 1px, transparent 1px 4px, rgba(190,105,135,.35) 4px 5px, transparent 5px calc(100% - 5px), rgba(190,105,135,.35) calc(100% - 5px) calc(100% - 4px), transparent calc(100% - 4px)),
+        linear-gradient(180deg, #F1B2C2 0%, #F9D0D9 16%, #EFA9BA 50%, #E293A8 84%, #D4849B 100%);
+      box-shadow: 0 7px 9px rgba(70,40,50,.3);
     }
     .s3 .gate.left { transform: translateX(-104%); }
     .s3 .gate.right { transform: translateX(104%); }
 
     .bow {
       position: absolute; left: 50%; top: 46%;
-      width: min(92%, 400px);
-      transform: translate(-50%, -37%);
+      width: min(88%, 390px);
+      transform: translate(-52.300%, -31.700%);
       z-index: 2;
-      filter: drop-shadow(0 8px 10px rgba(90,50,60,.28));
+      filter: brightness(1.16) saturate(.86) drop-shadow(0 9px 8px rgba(70,40,50,.26));
       transition: transform 1s cubic-bezier(.5,0,.85,.45), opacity .45s ease .55s;
     }
-    .s3 .bow { transform: translate(-50%, 130%) rotate(9deg); opacity: 0; }
+    .s3 .bow { transform: translate(-52.300%, 120%) rotate(7deg); opacity: 0; }
 
     /* Envelope body: side flaps + bottom flap */
     .env-body {
@@ -169,24 +171,41 @@
     /* Wax seal */
     .seal {
       position: absolute; left: 50%; top: 46%;
-      width: 112px; height: 112px;
-      margin: -60px 0 0 -56px;
+      width: 96px; height: 96px;
+      margin: -52px 0 0 -48px;
       z-index: 5;
-      border: 0; padding: 0; background: none;
+      border: 0; padding: 0;
+      border-radius: 47% 53% 51% 49% / 52% 48% 53% 47%;
+      background: radial-gradient(circle at 34% 28%, #F3E8CE 0%, #DDCBA4 45%, #C2AC80 100%);
+      box-shadow:
+        0 8px 16px rgba(110,70,60,.32),
+        inset 0 2px 3px rgba(255,255,255,.7),
+        inset 0 -4px 7px rgba(120,95,55,.35);
+      display: grid; place-items: center;
       cursor: pointer;
-      filter: drop-shadow(0 7px 9px rgba(105,65,60,.34));
       transition: transform 1.3s cubic-bezier(.6,0,.3,1);
     }
-    .seal svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .seal::before {
+      content: ""; position: absolute; inset: 11px; border-radius: 50%;
+      box-shadow: inset 0 2px 4px rgba(120,95,55,.45), 0 1px 1px rgba(255,255,255,.6);
+      background: radial-gradient(circle at 40% 30%, #E9DBBA, #CDB88C);
+    }
     .seal::after {
-      content: ""; position: absolute; inset: -4px; border-radius: 50%;
+      content: ""; position: absolute; inset: -10px; border-radius: 50%;
       border: 2px solid rgba(255,255,255,.75);
       animation: ring 2.2s ease-out infinite;
     }
     @keyframes ring { from { transform: scale(.9); opacity: .9; } to { transform: scale(1.35); opacity: 0; } }
+    .seal span {
+      position: relative;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 32px; font-weight: 600; line-height: 1; letter-spacing: .02em;
+      color: #A48D5F;
+      text-shadow: 0 1px 0 rgba(255,255,255,.65), 0 -1px 0 rgba(110,85,45,.35);
+    }
     .s1 .seal { transform: scale(.9); transition-duration: .22s; }
-    .s1 .seal::after { display: none; }
     .s2 .seal { transform: translateY(-62vh) scale(.9); transition-duration: 1.3s; }
+    .s1 .seal::after { display: none; }
 
     /* ================= HERO ================= */
     #invite { position: relative; }
@@ -560,36 +579,8 @@
     <div class="gate left"><canvas id="gateL"></canvas><div class="ribbon"></div></div>
     <div class="gate right"><canvas id="gateR"></canvas><div class="ribbon"></div></div>
 
-    <svg class="bow" viewBox="0 0 360 270" aria-hidden="true">
-      <defs>
-        <linearGradient id="bwLoop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1F4"/><stop offset=".38" stop-color="#F7CDD7"/><stop offset=".78" stop-color="#E9A7B8"/><stop offset="1" stop-color="#DC8FA4"/></linearGradient>
-        <linearGradient id="bwIn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C97B93"/><stop offset=".6" stop-color="#DE9BAE"/><stop offset="1" stop-color="#EDBAC7"/></linearGradient>
-        <linearGradient id="bwTail" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7A3B5"/><stop offset=".4" stop-color="#F9D5DD"/><stop offset=".7" stop-color="#EEB5C3"/><stop offset="1" stop-color="#DE93A8"/></linearGradient>
-        <linearGradient id="bwKnot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFEFF3"/><stop offset=".5" stop-color="#F2BECB"/><stop offset="1" stop-color="#D98DA2"/></linearGradient>
-        <filter id="bwSoft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="3"/></filter>
-        <g id="bwHalf">
-          <!-- tail with a swallow-tail cut -->
-          <path d="M168 108c-8 44-28 88-66 134l28-10 8 28c26-44 44-92 50-146z" fill="url(#bwTail)"/>
-          <path d="M176 116c-8 42-22 82-44 122" fill="none" stroke="#C97B93" stroke-width="1.200" opacity=".55"/>
-          <path d="M170 112c-10 36-26 72-52 108" fill="none" stroke="#fff" stroke-width="2.400" opacity=".45" filter="url(#bwSoft)"/>
-          <!-- loop -->
-          <path d="M180 96C152 44 88 14 46 28 10 40 4 92 36 120c40 30 104 10 144-18z" fill="url(#bwLoop)"/>
-          <!-- inside of the loop, seen through the opening -->
-          <path d="M166 94C140 64 98 50 68 58c-22 6-24 30-6 44 30 18 76 10 104-4z" fill="url(#bwIn)"/>
-          <path d="M70 62c26-8 62 6 86 28" fill="none" stroke="#B96A84" stroke-width="1.200" opacity=".5"/>
-          <!-- soft sheen and gathered folds -->
-          <path d="M150 62C122 36 84 26 54 36" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".6" filter="url(#bwSoft)"/>
-          <path d="M40 112c34 22 86 10 124-12" fill="none" stroke="#C97B93" stroke-width="5" opacity=".28" filter="url(#bwSoft)"/>
-          <path d="M172 88c-10-14-22-24-36-32M170 98c-14 2-28 8-40 16M174 92c-16-6-32-8-48-6" fill="none" stroke="#C5758E" stroke-width="1.100" stroke-linecap="round" opacity=".55"/>
-        </g>
-      </defs>
-      <use href="#bwHalf"/>
-      <use href="#bwHalf" transform="translate(360 0) scale(-1 1)"/>
-      <!-- knot -->
-      <path d="M160 76c12-7 28-7 40 0 7 13 7 31 0 44-12 7-28 7-40 0-7-13-7-31 0-44z" fill="url(#bwKnot)"/>
-      <path d="M168 78c-4 13-4 27 0 40M180 75v46M192 78c4 13 4 27 0 40" fill="none" stroke="#C5758E" stroke-width="1.100" opacity=".55"/>
-      <ellipse cx="172" cy="88" rx="6" ry="9" fill="#fff" opacity=".5" filter="url(#bwSoft)"/>
-    </svg>
+    <!-- Photo: "Pink Bow" by Stilfehler, CC BY-SA 3.0, via Wikimedia Commons — background removed, colour softened -->
+    <img class="bow" src="assets/bow.png" alt="">
 
     <div class="env-body">
       <div class="flap-side l paper"></div>
@@ -608,46 +599,7 @@
     </div>
 
     <div class="top-wrap"><div class="flap-top paper"></div></div>
-    <button class="seal" aria-hidden="true" tabindex="-1">
-      <svg viewBox="0 0 120 120">
-        <defs>
-          <filter id="wax" x="-20%" y="-20%" width="140%" height="140%">
-            <!-- wobbly poured edge -->
-            <feTurbulence type="fractalNoise" baseFrequency=".032" numOctaves="2" seed="11" result="n"/>
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="11" xChannelSelector="R" yChannelSelector="G" result="d"/>
-            <!-- raised, rounded rim lit from the top left -->
-            <feGaussianBlur in="d" stdDeviation="2.600" result="b"/>
-            <feDiffuseLighting in="b" surfaceScale="7" diffuseConstant="1.150" lighting-color="#fff" result="df"><feDistantLight azimuth="230" elevation="52"/></feDiffuseLighting>
-            <feComposite in="df" in2="d" operator="in" result="df2"/>
-            <feBlend in="d" in2="df2" mode="multiply" result="lit"/>
-            <feSpecularLighting in="b" surfaceScale="7" specularConstant=".55" specularExponent="26" lighting-color="#FFF9EA" result="sp"><fePointLight x="22" y="8" z="80"/></feSpecularLighting>
-            <feComposite in="sp" in2="d" operator="in" result="sp2"/>
-            <!-- fine wax grain -->
-            <feTurbulence type="fractalNoise" baseFrequency="1.150" numOctaves="2" seed="3" result="g"/>
-            <feColorMatrix in="g" type="matrix" values="0 0 0 0 .38  0 0 0 0 .29  0 0 0 0 .16  0 0 0 -1.100 .66" result="g2"/>
-            <feComposite in="g2" in2="d" operator="in" result="g3"/>
-            <feMerge><feMergeNode in="lit"/><feMergeNode in="g3"/><feMergeNode in="sp2"/></feMerge>
-          </filter>
-          <radialGradient id="waxFill" cx="38%" cy="30%" r="80%"><stop offset="0" stop-color="#F4EAD3"/><stop offset=".55" stop-color="#E2D2AF"/><stop offset="1" stop-color="#CDB98F"/></radialGradient>
-          <radialGradient id="waxDip" cx="45%" cy="38%" r="70%"><stop offset="0" stop-color="#E9DCBD"/><stop offset="1" stop-color="#D6C49C"/></radialGradient>
-        </defs>
-        <g filter="url(#wax)">
-          <path d="M60 8c16-2 34 6 43 20 9 13 11 31 4 46-6 15-21 27-37 31-17 4-37-2-49-15C9 77 5 58 11 42 17 24 40 10 60 8z" fill="url(#waxFill)"/>
-          <ellipse cx="97" cy="92" rx="11" ry="9" fill="#D9C8A2"/>
-          <ellipse cx="18" cy="84" rx="8" ry="10" fill="#DCCBA6"/>
-        </g>
-        <!-- pressed stamp -->
-        <circle cx="60" cy="59" r="36.500" fill="url(#waxDip)"/>
-        <circle cx="60" cy="59" r="36.500" fill="none" stroke="#8E7748" stroke-opacity=".5" stroke-width="2"/>
-        <circle cx="60.800" cy="60" r="37.600" fill="none" stroke="#FFFBEF" stroke-opacity=".75" stroke-width="1.200"/>
-        <circle cx="60" cy="59" r="30.500" fill="none" stroke="#9C8554" stroke-opacity=".55" stroke-width="1" stroke-dasharray="1.200 3.600" stroke-linecap="round"/>
-        <g font-family="Cormorant Garamond, Georgia, serif" font-size="31" font-weight="600" text-anchor="middle" letter-spacing=".5">
-          <text x="61" y="70.400" fill="#FFFBEF" fill-opacity=".85">RB</text>
-          <text x="59.200" y="68.600" fill="#7E683C" fill-opacity=".6">RB</text>
-          <text x="60" y="69.500" fill="#C3AD7F">RB</text>
-        </g>
-      </svg>
-    </button>
+    <button class="seal" aria-hidden="true" tabindex="-1"><span>RB</span></button>
   </div>
 
   <!-- Sound button -->
@@ -834,6 +786,12 @@
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
       }, 3950);
     }
+    // Phones keep a frozen copy of the page when you leave it; returning with "back"
+    // would show it already opened, so start again from the sealed envelope instead.
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.addEventListener('pageshow', e => { if (e.persisted) location.reload(); });
+    window.addEventListener('pagehide', () => music.pause());
+
     cover.addEventListener('click', openInvitation);
     cover.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openInvitation(); }
